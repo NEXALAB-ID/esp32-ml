@@ -35,9 +35,9 @@ No wiring required — all examples use simulated or generated data.
 
 ## Notes
 
-> **Pre-trained Models Required** — Each example requires a model file (e.g., `sine_model.h`, `anomaly_model.h`) converted to a C array. These are not included in this repository. See the [Getting Started](#getting-started) section for how to obtain or generate them.
-
 > **Simulated Data** — All examples use simulated or mathematically generated data. No external sensors or wiring are required to run these examples.
+
+> **Generating Models** — Each example folder includes a Jupyter notebook (`generate_*.ipynb`) to train and export the model. Run it in Google Colab to regenerate `sine_model.h` or `anomaly_model.h` if needed.
 
 ---
 
@@ -46,7 +46,6 @@ No wiring required — all examples use simulated or generated data.
 - ESP32 board (any variant)
 - [Arduino IDE](https://www.arduino.cc/en/software) with ESP32 board support installed
 - Library: `TensorFlowLite_ESP32` — install via Arduino Library Manager
-- Pre-trained model converted to C array (`.h` file)
 
 ---
 
@@ -57,15 +56,13 @@ No wiring required — all examples use simulated or generated data.
    git clone https://github.com/NEXALAB-ID/esp32-ml.git
    ```
 
-2. Obtain or generate the model file:
-   - For `sine_wave` — follow the [TensorFlow Lite Hello World tutorial](https://github.com/tensorflow/tflite-micro/tree/main/tensorflow/lite/micro/examples/hello_world) to generate `sine_model.h`
-   - For `anomaly_detection` — train a simple autoencoder and convert it using `xxd -i model.tflite > anomaly_model.h`
+2. Open the example you want in Arduino IDE
 
-3. Place the `.h` model file inside the example folder
+3. Select your ESP32 board under **Tools → Board**
 
-4. Open the example in Arduino IDE, select your ESP32 board, and upload
+4. Upload and open Serial Monitor at **115200 baud** to see inference results
 
-5. Open Serial Monitor at **115200 baud** to see inference results
+> To regenerate the model files, open the `generate_*.ipynb` notebook in Google Colab and run all cells. Download the generated `.h` file and replace the existing one in the example folder.
 
 ---
 
@@ -85,10 +82,14 @@ A model trained on normal sensor data range (20–30) is loaded onto the ESP32. 
 esp32-ml/
 ├── sine_wave/
 │   ├── sine_wave.ino
-│   └── sine_model.h        ← not included, generate separately
+│   ├── generate_sine_model.ipynb
+│   ├── sine_model.tflite
+│   └── sine_model.h
 └── anomaly_detection/
     ├── anomaly_detection.ino
-    └── anomaly_model.h     ← not included, generate separately
+    ├── generate_anomaly_model.ipynb
+    ├── anomaly_model.tflite
+    └── anomaly_model.h
 ```
 
 ---
